@@ -1,6 +1,7 @@
 package com.example.voteme;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +34,27 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+
+        else{
+
+            if (name.equals("admin@gmail.com")){
+                Intent intent=new Intent(MainActivity.this,Admin.class);
+                startActivity(intent);
+                finish();
+            }
+            else{
+
+
+//                recyclerView = findViewById(R.id.list);
+//                linearLayoutManager = new LinearLayoutManager(this);
+//                recyclerView.setLayoutManager(linearLayoutManager);
+//                recyclerView.setHasFixedSize(true);
+//                fetch();
+            }
+
+
+        }
+
 
     }
 }
