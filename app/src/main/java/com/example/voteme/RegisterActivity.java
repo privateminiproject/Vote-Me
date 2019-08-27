@@ -93,10 +93,10 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     public void Login(View view) {
+        Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
+        startActivity(intent);
     }
 }

@@ -27,22 +27,23 @@
 
     <Button
         android:id="@+id/btnLogIn"
-        android:background="@drawable/btn_bg"
+        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/btn_bg"
         android:paddingStart="100dp"
         android:paddingEnd="100dp"
-        android:textColor="@color/colorAccent"
-
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="Login In"
-        android:textSize="15dp" />
+        android:textSize="20dp"
+        android:text="Register"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent" />
 
     <TextView
         android:id="@+id/SignIn"
         android:onClick="Register"
         android:layout_width="wrap_content"
         android:textSize="20dp"
+        android:layout_margin="15dp"
         android:textColor="@color/colorAccent"
         android:layout_height="wrap_content"
         android:text="Create A New Account" />
