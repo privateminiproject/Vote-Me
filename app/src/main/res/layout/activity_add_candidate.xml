@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".LoginActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/candidate_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ppl"
+        />
 
     <EditText
         android:id="@+id/candidate_name"
@@ -32,7 +40,7 @@
         android:background="@drawable/btn_bg"
         android:paddingStart="100dp"
         android:paddingEnd="100dp"
-        android:textSize="20dp"
+        android:textSize="16dp"
         android:text="Add Candidate"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent" />
@@ -42,6 +50,8 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+
 
 
 </LinearLayout>
