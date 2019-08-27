@@ -33,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddCandidate extends AppCompatActivity {
 
-//    ProgressBar progressBar;
+    ProgressBar progressBar;
     Button add;
     public EditText candidate_name,candidate_pass;
     CircleImageView candidate_image;
@@ -46,8 +46,8 @@ public class AddCandidate extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_candidate);
-//        progressBar=findViewById(R.id.loginProgressBars);
-//        progressBar.setVisibility(View.INVISIBLE);
+        progressBar=findViewById(R.id.add_Candidate_progress);
+        progressBar.setVisibility(View.INVISIBLE);
         add=findViewById(R.id.add_Candidate);
         candidate_name=findViewById(R.id.candidate_name);
         candidate_pass=findViewById(R.id.candidate_pass);
@@ -57,13 +57,6 @@ public class AddCandidate extends AppCompatActivity {
         candidate_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-//                Intent intent = new Intent();
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
-
                 CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(AddCandidate.this);
@@ -78,7 +71,7 @@ public class AddCandidate extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (imageUri!=null){
-//                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
                     final String Candidate_Name = candidate_name.getText().toString();
                     final String Candidate_Desc = candidate_pass.getText().toString();
                     if (Candidate_Name.isEmpty()) {
@@ -118,7 +111,7 @@ public class AddCandidate extends AppCompatActivity {
                                                     Intent in=new Intent(AddCandidate.this, Admin.class);
                                                     startActivity(in);
                                                     finish();
-//                                                    progressBar.setVisibility(View.INVISIBLE);
+                                                    progressBar.setVisibility(View.INVISIBLE);
                                                 }
                                             });
 
@@ -160,21 +153,6 @@ public class AddCandidate extends AppCompatActivity {
         return randomStringBuilder.toString();
     }
 
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        result = CropImage.getActivityResult(data);
-//        if(requestCode == PICK_IMAGE){
-//            imageUri = data.getData();
-//            candidate_image.setImageURI(imageUri);
-//
-//        }
-//
-//    }
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -188,7 +166,4 @@ public class AddCandidate extends AppCompatActivity {
             }
         }
     }
-
-
-
 }

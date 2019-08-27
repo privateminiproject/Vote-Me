@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 ////            FirebaseAuth fAuth = FirebaseAuth.getInstance();
 ////            fAuth.signOut();
 ////
-            Intent intent=new Intent(MainActivity.this,AddCandidate.class);
+            Intent intent=new Intent(MainActivity.this,Admin.class);
             startActivity(intent);
             finish();
 ////        }
