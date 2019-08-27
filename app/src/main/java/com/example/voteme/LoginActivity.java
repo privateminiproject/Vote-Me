@@ -65,8 +65,6 @@ public class LoginActivity extends AppCompatActivity {
                                     progressBar.setVisibility(View.INVISIBLE);
                                     Intent intent=new Intent(LoginActivity.this,Admin.class);
                                     intent.putExtra("Email", userEmail);
-
-
                                     startActivity(intent);
                                     finish();
 

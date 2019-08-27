@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,13 +21,17 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if (currentUser==null){
+        Intent intent3 = getIntent();
+        String name = intent3.getStringExtra("Email");
+        Log.e("Current","Current User is = "+name);
+
+        if ( name== null) {
             FirebaseAuth fAuth = FirebaseAuth.getInstance();
             fAuth.signOut();
 
             Intent intent=new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);
-
+            finish();
         }
 
     }
