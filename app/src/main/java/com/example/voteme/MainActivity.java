@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     String userEmail = null;
     FirebaseUser currentUser;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef;
 
 
     @Override
@@ -145,13 +146,14 @@ public class MainActivity extends AppCompatActivity {
                 holder.root.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        myRef = database.getReference("Voter-details").child(model.getName());
+                        myRef.push().setValue(name);
+
                         DatabaseReference dbref = database.getReference("Voter Email-Id");
                         dbref.push().child("voter_name").setValue(name);
                         Intent intent = new Intent(MainActivity.this, Done.class);
                         startActivity(intent);
                         finish();
-
-                        Toast.makeText(MainActivity.this, model.getName(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

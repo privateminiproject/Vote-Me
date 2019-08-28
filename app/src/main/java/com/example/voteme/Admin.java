@@ -56,7 +56,9 @@ public class Admin extends AppCompatActivity {
     private FirebaseRecyclerAdapter adapter;
     BottomAppBar bottomAppBar;
     FloatingActionButton add;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     private LinearLayoutManager linearLayoutManager;
+    String total,count;
 
 
     @Override
@@ -137,15 +139,24 @@ public class Admin extends AppCompatActivity {
 
 
             @Override
-            protected void onBindViewHolder(ViewHolder holder, final int position, final Model model) {
+            protected void onBindViewHolder(final ViewHolder holder, final int position, final Model model) {
                 holder.setTxtTitle(model.getName());
                 holder.setTxtDesc(model.getDiscription());
                 Glide.with(Admin.this).load(model.getImage()).into(holder.img);
 
-                holder.root.setOnClickListener(new View.OnClickListener() {
+
+                DatabaseReference candidate_name = database.getReference("Voter-details").child(model.getName());
+                candidate_name.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onClick(View view) {
-                        Toast.makeText(Admin.this, model.getName(), Toast.LENGTH_SHORT).show();
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String Employee1Count= dataSnapshot.getChildrenCount()+" Voted";
+                        holder.vote.setText(Employee1Count);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
                 });
             }
