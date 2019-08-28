@@ -68,6 +68,7 @@ public class Admin extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.list1);
 
+
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);

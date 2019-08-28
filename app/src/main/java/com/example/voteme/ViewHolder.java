@@ -17,6 +17,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     public TextView txtTitle;
     public TextView txtDesc;
     public ImageView img;
+    public TextView vote;
 
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -24,6 +25,11 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         txtTitle = itemView.findViewById(R.id.list_title);
         txtDesc = itemView.findViewById(R.id.list_desc);
         img=itemView.findViewById(R.id.imageView);
+        vote=itemView.findViewById(R.id.vote);
+    }
+
+    public void setVote(String string){
+        vote.setText(string);
     }
 
     public void setTxtTitle(String string) {

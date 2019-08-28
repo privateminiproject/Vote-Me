@@ -2,7 +2,17 @@ package com.example.voteme;
 
 public class Model {
 
-    public String id,Name,Discription,Image;
+    public String id,Name,Discription,Image,Vote;
+
+
+
+    public Model(String id, String name, String discription, String image, String vote) {
+        this.id = id;
+        Name = name;
+        Discription = discription;
+        Image = image;
+        Vote = vote;
+    }
 
     public Model(String name, String discription, String image) {
         Name = name;
@@ -19,11 +29,11 @@ public class Model {
         this.id = id;
     }
 
-    public Model(String id, String name, String discription, String image) {
-        this.id = id;
+    public Model(String name, String discription, String image, String vote) {
         Name = name;
         Discription = discription;
         Image = image;
+        Vote = vote;
     }
 
     public Model() {
