@@ -26,53 +26,48 @@ import com.google.firebase.database.Query;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
     private RecyclerView recyclerView;
     private FirebaseRecyclerAdapter adapter;
-
+    FloatingActionButton add;
     private LinearLayoutManager linearLayoutManager;
+    private FirebaseAuth mAuth;
+    String name;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
         Intent intent3 = getIntent();
-        String name = intent3.getStringExtra("Email");
-        Log.e("Current","Current User is = "+name);
+        name = intent3.getStringExtra("Email");
+        Log.e("Current", "Current User is = " + name);
 
-        if ( name== null) {
-            FirebaseAuth fAuth = FirebaseAuth.getInstance();
-            fAuth.signOut();
-            Intent intent=new Intent(MainActivity.this,LoginActivity.class);
-            startActivity(intent);
+        if (name == null) {
+            mAuth = FirebaseAuth.getInstance();
+            mAuth.signOut();
 
+            Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent2);
+            finish();
+        } else {
 
-        }
-
-        else{
-
-            if (name.equals("admin@gmail.com")){
-                Intent intent=new Intent(MainActivity.this,Admin.class);
+            if (name.equals("admin@gmail.com")) {
+                Intent intent = new Intent(MainActivity.this, Admin.class);
                 startActivity(intent);
                 finish();
-            }
-            else{
-
-
-//                recyclerView = findViewById(R.id.list);
-//                linearLayoutManager = new LinearLayoutManager(this);
-//                recyclerView.setLayoutManager(linearLayoutManager);
-//                recyclerView.setHasFixedSize(true);
-//                fetch();
+            } else {
+                recyclerView = findViewById(R.id.list);
+                linearLayoutManager = new LinearLayoutManager(this);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                recyclerView.setHasFixedSize(true);
+                fetch();
             }
 
 
         }
-
 
     }
 
@@ -124,7 +119,29 @@ public class MainActivity extends AppCompatActivity {
             }
 
         };
-        recyclerView.setAdapter(adapter);
+
+        if (name.equals("admin@gmail.com")){
+
+        }
+        else {
+            recyclerView.setAdapter(adapter);
+        }
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
 }
+
+
+
