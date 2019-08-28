@@ -77,26 +77,17 @@ public class Admin extends AppCompatActivity {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
                 if (dy < 0 && !add.isShown()) {
                     bottomAppBar.setVisibility(View.VISIBLE);
                     add.show();
 
-                } else if (dy > -50 && add.isShown()) {
+                } else if (dy > 0 && add.isShown()) {
                     add.hide();
                     bottomAppBar.setVisibility(View.INVISIBLE);
                 }
             }
 
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
-                    add.show();
-                    bottomAppBar.setVisibility(View.VISIBLE);
-                }
-
-
-                super.onScrollStateChanged(recyclerView, newState);
-            }
         });
 
 

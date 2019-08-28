@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     String name;
     String total;
-    String userEmail;
+    String userEmail = null;
     FirebaseUser currentUser;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        userEmail = currentUser.getEmail();
+
         Intent intent3 = getIntent();
         name = intent3.getStringExtra("Email");
         Log.e("Current", "Current User is = " + name);
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent2);
             finish();
         } else {
-
+            userEmail = currentUser.getEmail();
             if (name.equals("admin@gmail.com")) {
                 Intent intent = new Intent(MainActivity.this, Admin.class);
                 startActivity(intent);
@@ -79,15 +79,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        Query query= FirebaseDatabase.getInstance().
+        Query query = FirebaseDatabase.getInstance().
                 getReference("Voter Email-Id").orderByChild("voter_name").equalTo(userEmail);
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                total= dataSnapshot.getChildrenCount()+"";
-                if (total.equals("1")){
-                    Intent intent=new Intent(MainActivity.this,Done.class);
+                total = dataSnapshot.getChildrenCount() + "";
+                if (total.equals("1")) {
+                    Intent intent = new Intent(MainActivity.this, Done.class);
                     startActivity(intent);
                     finish();
                 }
@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
 
     }
@@ -148,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         DatabaseReference dbref = database.getReference("Voter Email-Id");
                         dbref.push().child("voter_name").setValue(name);
-                        Intent intent=new Intent(MainActivity.this,Done.class);
+                        Intent intent = new Intent(MainActivity.this, Done.class);
                         startActivity(intent);
                         finish();
 
@@ -159,12 +158,11 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
-        if (name.equals("admin@gmail.com")){
-
-        }
-        else {
+//        if (name.equals("admin@gmail.com")) {
+//
+//        } else {
             recyclerView.setAdapter(adapter);
-        }
+//        }
 
     }
 
