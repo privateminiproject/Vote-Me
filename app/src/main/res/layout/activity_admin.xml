@@ -13,7 +13,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list1"
         android:layout_width="match_parent"
-        android:layout_height="671dp">
+        android:layout_height="match_parent"
+        android:paddingBottom="50dp"
+        >
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -22,10 +24,14 @@
         style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:backgroundTint="@color/colorPrimaryDark"
+
+        app:fabAlignmentMode="center"
         android:layout_gravity="bottom" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add"

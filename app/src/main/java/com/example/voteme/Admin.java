@@ -29,6 +29,7 @@ import com.firebase.ui.database.SnapshotParser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -53,15 +54,17 @@ public class Admin extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private FirebaseRecyclerAdapter adapter;
+    BottomAppBar bottomAppBar;
     FloatingActionButton add;
     private LinearLayoutManager linearLayoutManager;
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+        add = findViewById(R.id.fab);
+        bottomAppBar = findViewById(R.id.bottomAppBar);
 
         recyclerView = findViewById(R.id.list1);
 
@@ -70,8 +73,32 @@ public class Admin extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         fetch();
 
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (dy < 0 && !add.isShown()) {
+                    bottomAppBar.setVisibility(View.VISIBLE);
+                    add.show();
 
-        add = findViewById(R.id.fab);
+                } else if (dy > -50 && add.isShown()) {
+                    add.hide();
+                    bottomAppBar.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    add.show();
+                    bottomAppBar.setVisibility(View.VISIBLE);
+                }
+
+
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
