@@ -64,6 +64,7 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private LinearLayoutManager linearLayoutManager;
     String id = null;
+    String name=null;
     private FirebaseAuth mAuth;
 
 
@@ -176,6 +177,7 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
                     @Override
                     public void onClick(View view) {
                         id=model.getId();
+                        name=model.getName();
                         PopupMenu popupMenu = new PopupMenu(Admin.this, view);
                         popupMenu.setOnMenuItemClickListener(Admin.this);
                         popupMenu.inflate(R.menu.candidate_menu);
@@ -240,8 +242,8 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
 
 
             case R.id.delete:
-                DatabaseReference candidate_name = database.getReference("Voter-details");
-                DatabaseReference Voter_id = database.getReference("Voter Email-Id");
+                DatabaseReference candidate_name = database.getReference("Voter-details").child(name);
+                DatabaseReference Voter_id = database.getReference("Voter Email-Id").child(name);
                 DatabaseReference candidate_id = database.getReference("Candidate").child(id);
                 candidate_name.removeValue();
                 Voter_id.removeValue();
