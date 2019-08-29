@@ -142,8 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 holder.setTxtTitle(model.getName());
                 holder.setTxtDesc(model.getDiscription());
                 Glide.with(MainActivity.this).load(model.getImage()).into(holder.img);
-
-                holder.root.setOnClickListener(new View.OnClickListener() {
+                holder.vote.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         myRef = database.getReference("Voter-details").child(model.getName());
@@ -154,6 +153,15 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, Done.class);
                         startActivity(intent);
                         finish();
+
+
+                    }
+                });
+
+                holder.root.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
                     }
                 });
             }

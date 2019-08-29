@@ -75,13 +75,14 @@ public class Admin extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         fetch();
+        bottomAppBar.setVisibility(View.INVISIBLE);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy < 0 && !add.isShown()) {
-                    bottomAppBar.setVisibility(View.VISIBLE);
+                    bottomAppBar.setVisibility(View.INVISIBLE);
                     add.show();
 
                 } else if (dy > 0 && add.isShown()) {

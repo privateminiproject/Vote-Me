@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                progressBar.setVisibility(View.VISIBLE);
+
                 final String emailID = emailId.getText().toString();
                 final String paswd = passwd.getText().toString();
                 if (emailID.isEmpty()) {
@@ -65,13 +65,16 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (emailID.isEmpty() && paswd.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "Fields Empty!", Toast.LENGTH_SHORT).show();
                 } else if (!(emailID.isEmpty() && paswd.isEmpty())) {
+                    progressBar.setVisibility(View.VISIBLE);
                     firebaseAuth.createUserWithEmailAndPassword(emailID, paswd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task task) {
 
                             if (!task.isSuccessful()) {
-                                Toast.makeText(RegisterActivity.this,"s not Successfully",Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.INVISIBLE);
+                                Toast.makeText(RegisterActivity.this,"Please Enter Correct Information." ,Toast.LENGTH_SHORT).show();
                             } else {
+
                                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").push();
                                 Map<String, Object> map = new HashMap<>();
                                 map.put("id", databaseReference.getKey());

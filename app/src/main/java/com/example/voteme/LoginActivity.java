@@ -43,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
                 final String userEmail = loginEmailId.getText().toString();
                 String userPaswd = logInpasswd.getText().toString();
                 if (userEmail.isEmpty()) {
@@ -55,12 +54,14 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (userEmail.isEmpty() && userPaswd.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Fields Empty!", Toast.LENGTH_SHORT).show();
                 } else if (!(userEmail.isEmpty() && userPaswd.isEmpty())) {
+                    progressBar.setVisibility(View.VISIBLE);
                     if (userEmail.equals("admin@gmail.com")){
                         firebaseAuth.signInWithEmailAndPassword(userEmail, userPaswd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener() {
                             @Override
                             public void onComplete(@NonNull Task task) {
                                 if (!task.isSuccessful()) {
                                     Toast.makeText(LoginActivity.this, "Not sucessfull", Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.INVISIBLE);
                                 } else {
                                     progressBar.setVisibility(View.INVISIBLE);
                                     Intent intent=new Intent(LoginActivity.this,Admin.class);
@@ -80,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task task) {
                                 if (!task.isSuccessful()) {
+                                    progressBar.setVisibility(View.INVISIBLE);
                                     Toast.makeText(LoginActivity.this, "Not sucessfull", Toast.LENGTH_SHORT).show();
                                 } else {
                                     progressBar.setVisibility(View.INVISIBLE);

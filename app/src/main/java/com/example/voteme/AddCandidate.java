@@ -71,7 +71,7 @@ public class AddCandidate extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (imageUri!=null){
-                    progressBar.setVisibility(View.VISIBLE);
+
                     final String Candidate_Name = candidate_name.getText().toString();
                     final String Candidate_Desc = candidate_pass.getText().toString();
                     if (Candidate_Name.isEmpty()) {
@@ -83,6 +83,7 @@ public class AddCandidate extends AppCompatActivity {
                     } else if (Candidate_Name.isEmpty() && Candidate_Desc.isEmpty()) {
                         Toast.makeText(AddCandidate.this, "Fields Empty!", Toast.LENGTH_SHORT).show();
                     } else if (!(Candidate_Name.isEmpty() && Candidate_Desc.isEmpty())) {
+                        progressBar.setVisibility(View.VISIBLE);
 
                         final StorageReference filepath=mStorageRef.child("Images")
                                 .child(Candidate_Name+""+random()+".jpg");
@@ -129,6 +130,7 @@ public class AddCandidate extends AppCompatActivity {
 
 
                     } else {
+                        progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(AddCandidate.this, "Error", Toast.LENGTH_SHORT).show();
 
                     }
