@@ -16,11 +16,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,7 +55,7 @@ import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Admin extends AppCompatActivity {
+public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     private RecyclerView recyclerView;
     private FirebaseRecyclerAdapter adapter;
@@ -61,6 +64,7 @@ public class Admin extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private LinearLayoutManager linearLayoutManager;
     String total,count;
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -69,6 +73,7 @@ public class Admin extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
         add = findViewById(R.id.fab);
         bottomAppBar = findViewById(R.id.bottomAppBar);
+        mAuth = FirebaseAuth.getInstance();
 
         recyclerView = findViewById(R.id.list1);
 
@@ -155,6 +160,7 @@ public class Admin extends AppCompatActivity {
                         String Employee1Count= dataSnapshot.getChildrenCount()+" Voted";
                         holder.vote.setText(Employee1Count);
 
+
                     }
 
                     @Override
@@ -162,9 +168,23 @@ public class Admin extends AppCompatActivity {
 
                     }
                 });
+
+
+                holder.root.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        PopupMenu popupMenu=new PopupMenu(Admin.this,view);
+                        popupMenu.setOnMenuItemClickListener(Admin.this);
+                        popupMenu.inflate(R.menu.item);
+                        popupMenu.show();
+                        Toast.makeText(Admin.this, model.getName(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
 
         };
+        adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
     }
 
@@ -182,10 +202,37 @@ public class Admin extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.item,menu);
-
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.clear_vote:
+                DatabaseReference candidate_name = database.getReference("Voter-details");
+                DatabaseReference Voter_id = database.getReference("Voter Email-Id");
+                candidate_name.removeValue();
+                Voter_id.removeValue();
+
+            case R.id.logout:
+                mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+                Intent intent2 = new Intent(Admin.this, LoginActivity.class);
+                startActivity(intent2);
+                finish();
+
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+
+
+        return false;
     }
 }
