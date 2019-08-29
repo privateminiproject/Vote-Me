@@ -63,7 +63,7 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
     FloatingActionButton add;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private LinearLayoutManager linearLayoutManager;
-    String total,count;
+    String id = null;
     private FirebaseAuth mAuth;
 
 
@@ -129,6 +129,7 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
 
 
                                 return new Model(
+                                        snapshot.child("id").getValue().toString(),
                                         snapshot.child("Candidate_Name").getValue().toString(),
                                         snapshot.child("Candidate_Description").getValue().toString(),
                                         snapshot.child("Candidate Image").getValue().toString());
@@ -148,6 +149,7 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
 
             @Override
             protected void onBindViewHolder(final ViewHolder holder, final int position, final Model model) {
+
                 holder.setTxtTitle(model.getName());
                 holder.setTxtDesc(model.getDiscription());
                 Glide.with(Admin.this).load(model.getImage()).into(holder.img);
@@ -157,7 +159,7 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
                 candidate_name.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String Employee1Count= dataSnapshot.getChildrenCount()+" Voted";
+                        String Employee1Count = dataSnapshot.getChildrenCount() + " Voted";
                         holder.vote.setText(Employee1Count);
 
 
@@ -173,11 +175,12 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
                 holder.root.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        PopupMenu popupMenu=new PopupMenu(Admin.this,view);
+                        id=model.getId();
+                        PopupMenu popupMenu = new PopupMenu(Admin.this, view);
                         popupMenu.setOnMenuItemClickListener(Admin.this);
-                        popupMenu.inflate(R.menu.item);
+                        popupMenu.inflate(R.menu.candidate_menu);
                         popupMenu.show();
-                        Toast.makeText(Admin.this, model.getName(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Admin.this, model.getName(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -202,14 +205,14 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.item,menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.item, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.clear_vote:
                 DatabaseReference candidate_name = database.getReference("Voter-details");
                 DatabaseReference Voter_id = database.getReference("Voter Email-Id");
@@ -232,6 +235,22 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
 
+        switch (menuItem.getItemId()) {
+            case R.id.edit:
+
+
+            case R.id.delete:
+                DatabaseReference candidate_name = database.getReference("Voter-details");
+                DatabaseReference Voter_id = database.getReference("Voter Email-Id");
+                DatabaseReference candidate_id = database.getReference("Candidate").child(id);
+                candidate_name.removeValue();
+                Voter_id.removeValue();
+                candidate_id.removeValue();
+
+
+
+
+        }
 
         return false;
     }
