@@ -35,7 +35,7 @@ public class AddCandidate extends AppCompatActivity {
 
     ProgressBar progressBar;
     Button add;
-    public EditText candidate_name,candidate_pass;
+    public EditText candidate_name,candidate_Disc;
     CircleImageView candidate_image;
     private static final int PICK_IMAGE = 1;
     private Uri imageUri;
@@ -50,17 +50,19 @@ public class AddCandidate extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
         add=findViewById(R.id.add_Candidate);
         candidate_name=findViewById(R.id.candidate_name);
-        candidate_pass=findViewById(R.id.candidate_pass);
+        candidate_Disc=findViewById(R.id.candidate_pass);
         candidate_image=findViewById(R.id.candidate_image);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         candidate_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(1,1)
                         .start(AddCandidate.this);
+
 
             }
         });
@@ -74,17 +76,21 @@ public class AddCandidate extends AppCompatActivity {
                 if (imageUri!=null){
 
                     final String Candidate_Name = candidate_name.getText().toString();
-                    final String Candidate_Desc = candidate_pass.getText().toString();
+                    final String Candidate_Desc = candidate_Disc.getText().toString();
                     if (Candidate_Name.isEmpty()) {
                         candidate_name.setError("Provide your Email first!");
                         candidate_name.requestFocus();
                     } else if (Candidate_Desc.isEmpty()) {
-                        candidate_pass.setError("Set your password");
-                        candidate_pass.requestFocus();
+                        candidate_Disc.setError("Set your password");
+                        candidate_Disc.requestFocus();
                     } else if (Candidate_Name.isEmpty() && Candidate_Desc.isEmpty()) {
                         Toast.makeText(AddCandidate.this, "Fields Empty!", Toast.LENGTH_SHORT).show();
                     } else if (!(Candidate_Name.isEmpty() && Candidate_Desc.isEmpty())) {
                         progressBar.setVisibility(View.VISIBLE);
+                        candidate_image.setOnClickListener(null);
+                        candidate_name.setFocusable(false);
+                        candidate_Disc.setFocusable(false);
+
 
                         final StorageReference filepath=mStorageRef.child("Images")
                                 .child(Candidate_Name+""+random()+".jpg");
@@ -98,6 +104,7 @@ public class AddCandidate extends AppCompatActivity {
                                         public void onSuccess(Uri uri) {
                                             Uri uris=uri;
                                             String download_url=uri.toString();
+
 
                                             Log.e("ImageLink",download_url);
                                             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Candidate").push();
