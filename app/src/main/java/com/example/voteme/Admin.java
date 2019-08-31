@@ -241,6 +241,7 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
             case R.id.edit:
 
 
+
             case R.id.delete:
                 DatabaseReference candidate_name = database.getReference("Voter-details").child(name);
                 DatabaseReference Voter_id = database.getReference("Voter Email-Id").child(name);
