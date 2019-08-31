@@ -55,7 +55,7 @@ import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+public class Admin extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private FirebaseRecyclerAdapter adapter;
@@ -65,6 +65,8 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
     private LinearLayoutManager linearLayoutManager;
     String id = null;
     String name=null;
+    String image=null;
+    String description=null;
     private FirebaseAuth mAuth;
 
 
@@ -178,11 +180,16 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
                     public void onClick(View view) {
                         id=model.getId();
                         name=model.getName();
-                        PopupMenu popupMenu = new PopupMenu(Admin.this, view);
-                        popupMenu.setOnMenuItemClickListener(Admin.this);
-                        popupMenu.inflate(R.menu.candidate_menu);
-                        popupMenu.show();
-//                        Toast.makeText(Admin.this, model.getName(), Toast.LENGTH_SHORT).show();
+                        image=model.getImage();
+                        description=model.getDiscription();
+                        Intent intent=new Intent(Admin.this,Profile.class);
+                        intent.putExtra("name",name);
+                        intent.putExtra("id",id);
+                        intent.putExtra("image",image);
+                        intent.putExtra("description",description);
+                        startActivity(intent);
+
+
                     }
                 });
 
@@ -234,27 +241,4 @@ public class Admin extends AppCompatActivity implements PopupMenu.OnMenuItemClic
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-
-        switch (menuItem.getItemId()) {
-            case R.id.edit:
-
-
-
-            case R.id.delete:
-                DatabaseReference candidate_name = database.getReference("Voter-details").child(name);
-                DatabaseReference Voter_id = database.getReference("Voter Email-Id").child(name);
-                DatabaseReference candidate_id = database.getReference("Candidate").child(id);
-                candidate_name.removeValue();
-                Voter_id.removeValue();
-                candidate_id.removeValue();
-
-
-
-
-        }
-
-        return false;
-    }
 }
