@@ -46,6 +46,8 @@ public class AddCandidate extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_candidate);
+
+
         progressBar=findViewById(R.id.add_Candidate_progress);
         progressBar.setVisibility(View.INVISIBLE);
         add=findViewById(R.id.add_Candidate);

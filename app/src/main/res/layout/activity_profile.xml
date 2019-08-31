@@ -1,9 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile">
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
+    android:gravity="top"
+    tools:context=".LoginActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ProgressBar
+        android:id="@+id/add_Candidate_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/colorAccent"/>
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_candidate_image"
+        android:layout_width="150dp"
+        android:layout_marginTop="50dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ppl"
+        />
+
+    <EditText
+        android:id="@+id/profile_candidate_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:hint="Candidate Name"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/profile_candidate_pass"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:hint="Candidate Description"
+        android:inputType="text"/>
+
+    <Button
+        android:id="@+id/profile_add_Candidate"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:background="@drawable/btn_bg"
+        android:paddingStart="100dp"
+        android:paddingEnd="100dp"
+        android:textSize="16dp"
+        android:text="Modify"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent" />
+
+    <Button
+        android:id="@+id/profile_Delete_Candidate"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:background="@drawable/btn_bg"
+        android:paddingStart="100dp"
+        android:paddingEnd="100dp"
+        android:textSize="16dp"
+        android:text="Modify"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent" />
+
+
+
+
+
+</LinearLayout>

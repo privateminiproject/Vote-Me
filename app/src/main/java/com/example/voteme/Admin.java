@@ -164,16 +164,12 @@ public class Admin extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String Employee1Count = dataSnapshot.getChildrenCount() + " Voted";
                         holder.vote.setText(Employee1Count);
-
-
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
                 });
-
 
                 holder.root.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -219,6 +215,7 @@ public class Admin extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -237,7 +234,6 @@ public class Admin extends AppCompatActivity {
 
 
         }
-
         return super.onOptionsItemSelected(item);
     }
 
