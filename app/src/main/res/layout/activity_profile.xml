@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@color/colorPrimaryDark"
     android:gravity="top"
-    tools:context=".LoginActivity">
+    tools:context=".Profile">
 
     <ProgressBar
         android:id="@+id/add_Candidate_progress"
@@ -63,6 +63,7 @@
 
     <Button
         android:id="@+id/profile_Delete_Candidate"
+        android:onClick="Delete"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
@@ -71,7 +72,7 @@
         android:paddingStart="100dp"
         android:paddingEnd="100dp"
         android:textSize="16dp"
-        android:text="Modify"
+        android:text="Delete"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent" />
 

@@ -37,7 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Profile extends AppCompatActivity {
 
     ProgressBar progressBar;
-    Button add;
+    Button add,delete;
     public EditText candidate_name, candidate_Disc;
     CircleImageView candidate_image;
     private static final int PICK_IMAGE = 1;
@@ -54,25 +54,19 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         progressBar = findViewById(R.id.add_Candidate_progress);
-
-
-
-
         progressBar.setVisibility(View.INVISIBLE);
         add = findViewById(R.id.profile_add_Candidate);
+        delete=findViewById(R.id.profile_Delete_Candidate);
         candidate_name = findViewById(R.id.profile_candidate_name);
         candidate_Disc = findViewById(R.id.profile_candidate_pass);
         candidate_image = findViewById(R.id.profile_candidate_image);
         mStorageRef = FirebaseStorage.getInstance().getReference();
-
 
         Intent intent3 = getIntent();
         names = intent3.getStringExtra("name");
         id = intent3.getStringExtra("id");
         images = intent3.getStringExtra("image");
         desc = intent3.getStringExtra("description");
-
-
 
         candidate_name.setText(names);
         candidate_Disc.setText(desc);
@@ -91,9 +85,23 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        if (imageUri==null){
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseReference candidate_name = database.getReference("Voter-details").child(names);
+                DatabaseReference Voter_id = database.getReference("Voter Email-Id").child(names);
+                DatabaseReference candidate_id = database.getReference("Candidate").child(id);
+                candidate_name.removeValue();
+                Voter_id.removeValue();
+                candidate_id.removeValue();
+                Intent in = new Intent(Profile.this, Admin.class);
+                startActivity(in);
+                finish();
 
-        }
+
+
+            }
+        });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,5 +199,10 @@ public class Profile extends AppCompatActivity {
                 Exception error = result.getError();
             }
         }
+    }
+
+    public void Delete(View view) {
+
+
     }
 }
