@@ -145,11 +145,14 @@ public class MainActivity extends AppCompatActivity {
                 holder.vote.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+
                         myRef = database.getReference("Voter-details").child(model.getName());
                         myRef.push().setValue(name);
 
                         DatabaseReference dbref = database.getReference("Voter Email-Id");
                         dbref.push().child("voter_name").setValue(name);
+
                         Intent intent = new Intent(MainActivity.this, Done.class);
                         startActivity(intent);
                         finish();
@@ -168,11 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
-//        if (name.equals("admin@gmail.com")) {
-//
-//        } else {
-            recyclerView.setAdapter(adapter);
-//        }
+        recyclerView.setAdapter(adapter);
 
     }
 

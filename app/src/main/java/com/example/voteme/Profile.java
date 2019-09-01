@@ -1,6 +1,7 @@
 package com.example.voteme;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,15 +21,22 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -46,7 +54,8 @@ public class Profile extends AppCompatActivity {
     private StorageReference mStorageRef;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    String names, desc, id, images;
+    String names, desc, id, images,total;
+    List<String> list=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +76,11 @@ public class Profile extends AppCompatActivity {
         id = intent3.getStringExtra("id");
         images = intent3.getStringExtra("image");
         desc = intent3.getStringExtra("description");
+        Map<String, Object> map = new HashMap<>();
 
         candidate_name.setText(names);
         candidate_Disc.setText(desc);
         Glide.with(Profile.this).load(images).into(candidate_image);
-
-//        Log.e("All Value is ", id + " " + names + " " + desc + " " + images);
 
         candidate_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,24 +90,6 @@ public class Profile extends AppCompatActivity {
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(1, 1)
                         .start(Profile.this);
-            }
-        });
-
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatabaseReference candidate_name = database.getReference("Voter-details").child(names);
-                DatabaseReference Voter_id = database.getReference("Voter Email-Id").child(names);
-                DatabaseReference candidate_id = database.getReference("Candidate").child(id);
-                candidate_name.removeValue();
-                Voter_id.removeValue();
-                candidate_id.removeValue();
-                Intent in = new Intent(Profile.this, Admin.class);
-                startActivity(in);
-                finish();
-
-
-
             }
         });
 
@@ -116,6 +106,7 @@ public class Profile extends AppCompatActivity {
 
                 if (imageUri==null){
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Candidate").child(id);
+
                     Map<String, Object> map = new HashMap<>();
                     map.put("id",id);
                     map.put("Candidate_Name", Candidate_Name);
@@ -124,6 +115,54 @@ public class Profile extends AppCompatActivity {
                     databaseReference.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+
+
+
+
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Voter-details");
+                            databaseReference.child(names).addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    list.add(dataSnapshot.getValue().toString());
+                                    Log.e("Name",list.toString());
+
+                                    DatabaseReference databaseReferences = FirebaseDatabase.getInstance().getReference("Voter-details").child(Candidate_Name);
+                                    databaseReferences.setValue(list).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            DatabaseReference databaseReferencess = FirebaseDatabase.getInstance().getReference("Voter-details").child(names);
+                                            databaseReferencess.removeValue();
+
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+
+
+
+
                             Intent in = new Intent(Profile.this, Admin.class);
                             startActivity(in);
                             finish();
@@ -203,6 +242,6 @@ public class Profile extends AppCompatActivity {
 
     public void Delete(View view) {
 
-
+        Toast.makeText(Profile.this,"Delete",Toast.LENGTH_LONG).show();
     }
 }

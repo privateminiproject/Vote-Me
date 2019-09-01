@@ -106,8 +106,6 @@ public class AddCandidate extends AppCompatActivity {
                                         public void onSuccess(Uri uri) {
                                             Uri uris=uri;
                                             String download_url=uri.toString();
-
-
                                             Log.e("ImageLink",download_url);
                                             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Candidate").push();
                                             Map<String, Object> map = new HashMap<>();

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,14 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -37,6 +46,9 @@ public class LoginActivity extends AppCompatActivity {
         signup = findViewById(R.id.SignIn);
         progressBar=findViewById(R.id.loginProgressBar);
         progressBar.setVisibility(View.INVISIBLE);
+
+
+
 
 
 
@@ -110,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent=new Intent(LoginActivity.this,RegisterActivity.class);
         startActivity(intent);
     }
+
 
 
 }
