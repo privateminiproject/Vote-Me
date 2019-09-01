@@ -240,8 +240,10 @@ public class Profile extends AppCompatActivity {
         }
     }
 
+
+
     public void Delete(View view) {
 
-        Toast.makeText(Profile.this,"Delete",Toast.LENGTH_LONG).show();
+
     }
 }
