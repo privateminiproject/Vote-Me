@@ -64,9 +64,9 @@ public class Admin extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private LinearLayoutManager linearLayoutManager;
     String id = null;
-    String name=null;
-    String image=null;
-    String description=null;
+    String name = null;
+    String image = null;
+    String description = null;
     private FirebaseAuth mAuth;
 
 
@@ -164,7 +164,9 @@ public class Admin extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String Employee1Count = dataSnapshot.getChildrenCount() + " Voted";
                         holder.vote.setText(Employee1Count);
+                        adapter.notifyDataSetChanged();
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -174,15 +176,15 @@ public class Admin extends AppCompatActivity {
                 holder.root.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        id=model.getId();
-                        name=model.getName();
-                        image=model.getImage();
-                        description=model.getDiscription();
-                        Intent intent=new Intent(Admin.this,Profile.class);
-                        intent.putExtra("name",name);
-                        intent.putExtra("id",id);
-                        intent.putExtra("image",image);
-                        intent.putExtra("description",description);
+                        id = model.getId();
+                        name = model.getName();
+                        image = model.getImage();
+                        description = model.getDiscription();
+                        Intent intent = new Intent(Admin.this, Profile.class);
+                        intent.putExtra("name", name);
+                        intent.putExtra("id", id);
+                        intent.putExtra("image", image);
+                        intent.putExtra("description", description);
                         startActivity(intent);
 
 
@@ -224,6 +226,8 @@ public class Admin extends AppCompatActivity {
                 DatabaseReference Voter_id = database.getReference("Voter Email-Id");
                 candidate_name.removeValue();
                 Voter_id.removeValue();
+                return true;
+
 
             case R.id.logout:
                 mAuth = FirebaseAuth.getInstance();
@@ -231,8 +235,7 @@ public class Admin extends AppCompatActivity {
                 Intent intent2 = new Intent(Admin.this, LoginActivity.class);
                 startActivity(intent2);
                 finish();
-
-
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
