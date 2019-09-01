@@ -56,7 +56,8 @@ public class Profile extends AppCompatActivity {
 
     String names, desc, id, images,total;
     List<String> list=new ArrayList<>();
-
+    int Value=0;
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,9 +118,6 @@ public class Profile extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
 
-
-
-
                             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Voter-details");
                             databaseReference.child(names).addChildEventListener(new ChildEventListener() {
                                 @Override
@@ -127,13 +125,13 @@ public class Profile extends AppCompatActivity {
                                     list.add(dataSnapshot.getValue().toString());
                                     Log.e("Name",list.toString());
 
+
                                     DatabaseReference databaseReferences = FirebaseDatabase.getInstance().getReference("Voter-details").child(Candidate_Name);
-                                    databaseReferences.setValue(list).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    databaseReferences.setValue(list).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
-                                        public void onSuccess(Void aVoid) {
+                                        public void onComplete(@NonNull Task<Void> task) {
                                             DatabaseReference databaseReferencess = FirebaseDatabase.getInstance().getReference("Voter-details").child(names);
                                             databaseReferencess.removeValue();
-
                                         }
                                     });
                                 }
@@ -196,6 +194,48 @@ public class Profile extends AppCompatActivity {
                                         databaseReference.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
+
+                                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Voter-details");
+                                                databaseReference.child(names).addChildEventListener(new ChildEventListener() {
+                                                    @Override
+                                                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                                        list.add(dataSnapshot.getValue().toString());
+                                                        Log.e("Name",list.toString());
+
+                                                        DatabaseReference databaseReferences = FirebaseDatabase.getInstance().getReference("Voter-details").child(Candidate_Name);
+                                                        databaseReferences.setValue(list).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                DatabaseReference databaseReferencess = FirebaseDatabase.getInstance().getReference("Voter-details").child(names);
+                                                                databaseReferencess.removeValue();
+                                                            }
+                                                        });
+
+
+                                                    }
+
+                                                    @Override
+                                                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
+
+
                                                 Intent in = new Intent(Profile.this, Admin.class);
                                                 startActivity(in);
                                                 finish();
