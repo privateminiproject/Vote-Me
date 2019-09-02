@@ -201,12 +201,14 @@ public class Admin extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         adapter.startListening();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         adapter.stopListening();
+        adapter.notifyDataSetChanged();
     }
 
     @Override

@@ -48,16 +48,14 @@ public class Profile extends AppCompatActivity {
     Button add, delete;
     public EditText candidate_name, candidate_Disc;
     CircleImageView candidate_image;
-    private static final int PICK_IMAGE = 1;
     private Uri imageUri;
-    CropImage.ActivityResult result;
     private StorageReference mStorageRef;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    String Email;
+    ArrayList<String> arrayList = new ArrayList<>();
+    String names, desc, id, images;
 
-    String names, desc, id, images, total;
-    List<String> list = new ArrayList<>();
-    int Value = 0;
-    String email;
+    int del;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +76,7 @@ public class Profile extends AppCompatActivity {
         id = intent3.getStringExtra("id");
         images = intent3.getStringExtra("image");
         desc = intent3.getStringExtra("description");
-        Map<String, Object> map = new HashMap<>();
+
 
         candidate_name.setText(names);
         candidate_Disc.setText(desc);
@@ -121,7 +119,6 @@ public class Profile extends AppCompatActivity {
                             progressBar.setVisibility(View.INVISIBLE);
                         }
                     });
-
                 }
 
 
@@ -166,6 +163,37 @@ public class Profile extends AppCompatActivity {
         });
 
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Voter-details");
+        databaseReference.child(id).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                arrayList.add(dataSnapshot.getValue().toString());
+                Log.e("Values", arrayList.toString());
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     public static String random() {
@@ -197,6 +225,54 @@ public class Profile extends AppCompatActivity {
 
     public void Delete(View view) {
 
+        DatabaseReference reference1=FirebaseDatabase.getInstance().getReference("Voter-details").child(id);
+        reference1.removeValue();
+
+        DatabaseReference reference2=FirebaseDatabase.getInstance().getReference("Candidate").child(id);
+        reference2.removeValue();
+
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Voter Email-Id");
+        for (int i = 0; i < arrayList.size(); i++) {
+            Email = arrayList.get(i);
+            Log.e("Email",Email);
+
+            reference.orderByChild("voter_name").equalTo(Email).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    dataSnapshot.getRef().setValue(null);
+
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+        Intent intent=new Intent(Profile.this,Admin.class);
+        startActivity(intent);
+        finish();
+
+
+//        DatabaseReference deleteRef=FirebaseDatabase.getInstance().getReference();
+//        deleteRef.child(KeyName).removeValue();
 
     }
 }

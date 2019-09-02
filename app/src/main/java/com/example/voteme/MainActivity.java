@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-
         Query query = FirebaseDatabase.getInstance().
                 getReference("Voter Email-Id").orderByChild("voter_name").equalTo(userEmail);
 
@@ -148,9 +147,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-
-                        myRef = database.getReference("Voter-details");
-                        myRef.child(model.getId()).push().setValue(name);
+                        myRef = database.getReference("Voter-details").child(model.getId());
+                        myRef.push().setValue(name);
 
                         DatabaseReference dbref = database.getReference("Voter Email-Id");
                         dbref.push().child("voter_name").setValue(name);
