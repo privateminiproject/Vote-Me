@@ -80,18 +80,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        Query query = FirebaseDatabase.getInstance().
-                getReference("Voter Email-Id").orderByChild("voter_name").equalTo(userEmail);
-
-        query.addValueEventListener(new ValueEventListener() {
+        DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                total = dataSnapshot.getChildrenCount() + "";
-                if (total.equals("1")) {
-                    Intent intent = new Intent(MainActivity.this, Done.class);
-                    startActivity(intent);
-                    finish();
-                }
 
             }
 
@@ -100,6 +92,24 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+//        query.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                total = dataSnapshot.getChildrenCount() + "";
+//                if (total.equals("1")) {
+//                    Intent intent = new Intent(MainActivity.this, Done.class);
+//                    startActivity(intent);
+//                    finish();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
     }
@@ -120,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                                 return new Model(
+                                        snapshot.child("id").getValue().toString(),
                                         snapshot.child("Candidate_Name").getValue().toString(),
                                         snapshot.child("Candidate_Description").getValue().toString(),
                                         snapshot.child("Candidate Image").getValue().toString());
@@ -140,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(ViewHolder holder, final int position, final Model model) {
                 holder.setTxtTitle(model.getName());
+
                 holder.setTxtDesc(model.getDiscription());
                 Glide.with(MainActivity.this).load(model.getImage()).into(holder.img);
                 holder.vote.setOnClickListener(new View.OnClickListener() {
@@ -147,11 +159,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
 
 
-                        myRef = database.getReference("Voter-details").child(model.getName());
-                        myRef.push().setValue(name);
-
-                        DatabaseReference dbref = database.getReference("Voter Email-Id");
-                        dbref.push().child("voter_name").setValue(name);
+                        myRef = database.getReference("Voter-details");
+                        myRef.child(model.getId()).push().setValue(name);
 
                         Intent intent = new Intent(MainActivity.this, Done.class);
                         startActivity(intent);

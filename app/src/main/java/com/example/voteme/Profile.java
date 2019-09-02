@@ -100,74 +100,77 @@ public class Profile extends AppCompatActivity {
             public void onClick(View view) {
                 final String Candidate_Name = candidate_name.getText().toString();
                 final String Candidate_Desc = candidate_Disc.getText().toString();
-
                 progressBar.setVisibility(View.VISIBLE);
                 candidate_image.setOnClickListener(null);
                 candidate_name.setFocusable(false);
                 candidate_Disc.setFocusable(false);
-
                 if (imageUri==null){
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Candidate").child(id);
 
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("id",id);
-                    map.put("Candidate_Name", Candidate_Name);
-                    map.put("Candidate_Description", Candidate_Desc);
-                    map.put("Candidate Image", images);
-                    databaseReference.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Voter-details");
-                            databaseReference.child(names).addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                    list.add(dataSnapshot.getValue().toString());
-                                    Log.e("Name",list.toString());
+                    if (candidate_name.getText().toString()==names || candidate_Disc.getText().toString()==desc){
+                        Toast.makeText(Profile.this,"Please Update Something..",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Candidate").child(id);
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("id",id);
+                        map.put("Candidate_Name", Candidate_Name);
+                        map.put("Candidate_Description", Candidate_Desc);
+                        map.put("Candidate Image", images);
+                        databaseReference.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
 
 
-                                    DatabaseReference databaseReferences = FirebaseDatabase.getInstance().getReference("Voter-details").child(Candidate_Name);
-                                    databaseReferences.setValue(list).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            DatabaseReference databaseReferencess = FirebaseDatabase.getInstance().getReference("Voter-details").child(names);
-                                            databaseReferencess.removeValue();
-                                        }
-                                    });
-                                }
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Voter-details");
+                                databaseReference.child(names).addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                        final ArrayList<String> arrayList=new ArrayList<>();
+                                        arrayList.add(dataSnapshot.getValue().toString());
+                                        Log.e("Names",arrayList.toString());
 
-                                @Override
-                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                }
-
-                                @Override
-                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                                }
-
-                                @Override
-                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
+                                        DatabaseReference databaseReferencess = FirebaseDatabase.getInstance().getReference("Voter-details").child(names);
+                                        databaseReferencess.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                DatabaseReference databaseReferences = FirebaseDatabase.getInstance().getReference("Voter-details").child(Candidate_Name);
+                                                databaseReferences.setValue(arrayList);
+                                            }
+                                        });
 
 
+                                    }
+
+                                    @Override
+                                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                                Intent in = new Intent(Profile.this, Admin.class);
+                                startActivity(in);
+                                finish();
+                                progressBar.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                    }
 
 
-
-
-                            Intent in = new Intent(Profile.this, Admin.class);
-                            startActivity(in);
-                            finish();
-                            progressBar.setVisibility(View.INVISIBLE);
-                        }
-                    });
                 }
 
 
@@ -199,11 +202,12 @@ public class Profile extends AppCompatActivity {
                                                 databaseReference.child(names).addChildEventListener(new ChildEventListener() {
                                                     @Override
                                                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                                        list.add(dataSnapshot.getValue().toString());
-                                                        Log.e("Name",list.toString());
+                                                        ArrayList<String> arrayList=new ArrayList<>();
+                                                        arrayList.add(dataSnapshot.getValue().toString());
+
 
                                                         DatabaseReference databaseReferences = FirebaseDatabase.getInstance().getReference("Voter-details").child(Candidate_Name);
-                                                        databaseReferences.setValue(list).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        databaseReferences.setValue(arrayList).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                 DatabaseReference databaseReferencess = FirebaseDatabase.getInstance().getReference("Voter-details").child(names);

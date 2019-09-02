@@ -158,7 +158,7 @@ public class Admin extends AppCompatActivity {
                 Glide.with(Admin.this).load(model.getImage()).into(holder.img);
 
 
-                DatabaseReference candidate_name = database.getReference("Voter-details").child(model.getName());
+                DatabaseReference candidate_name = database.getReference("Voter-details").child(model.getId());
                 candidate_name.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
