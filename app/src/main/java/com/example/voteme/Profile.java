@@ -45,7 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Profile extends AppCompatActivity {
 
     ProgressBar progressBar;
-    Button add,delete;
+    Button add, delete;
     public EditText candidate_name, candidate_Disc;
     CircleImageView candidate_image;
     private static final int PICK_IMAGE = 1;
@@ -54,9 +54,9 @@ public class Profile extends AppCompatActivity {
     private StorageReference mStorageRef;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    String names, desc, id, images,total;
-    List<String> list=new ArrayList<>();
-    int Value=0;
+    String names, desc, id, images, total;
+    List<String> list = new ArrayList<>();
+    int Value = 0;
     String email;
 
     @Override
@@ -67,7 +67,7 @@ public class Profile extends AppCompatActivity {
         progressBar = findViewById(R.id.add_Candidate_progress);
         progressBar.setVisibility(View.INVISIBLE);
         add = findViewById(R.id.profile_add_Candidate);
-        delete=findViewById(R.id.profile_Delete_Candidate);
+        delete = findViewById(R.id.profile_Delete_Candidate);
         candidate_name = findViewById(R.id.profile_candidate_name);
         candidate_Disc = findViewById(R.id.profile_candidate_pass);
         candidate_image = findViewById(R.id.profile_candidate_image);
@@ -104,77 +104,28 @@ public class Profile extends AppCompatActivity {
                 candidate_image.setOnClickListener(null);
                 candidate_name.setFocusable(false);
                 candidate_Disc.setFocusable(false);
-                if (imageUri==null){
+                if (imageUri == null) {
 
-                    if (candidate_name.getText().toString()==names || candidate_Disc.getText().toString()==desc){
-                        Toast.makeText(Profile.this,"Please Update Something..",Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Candidate").child(id);
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("id",id);
-                        map.put("Candidate_Name", Candidate_Name);
-                        map.put("Candidate_Description", Candidate_Desc);
-                        map.put("Candidate Image", images);
-                        databaseReference.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-
-
-                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Voter-details");
-                                databaseReference.child(names).addChildEventListener(new ChildEventListener() {
-                                    @Override
-                                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                        final ArrayList<String> arrayList=new ArrayList<>();
-                                        arrayList.add(dataSnapshot.getValue().toString());
-                                        Log.e("Names",arrayList.toString());
-
-                                        DatabaseReference databaseReferencess = FirebaseDatabase.getInstance().getReference("Voter-details").child(names);
-                                        databaseReferencess.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                DatabaseReference databaseReferences = FirebaseDatabase.getInstance().getReference("Voter-details").child(Candidate_Name);
-                                                databaseReferences.setValue(arrayList);
-                                            }
-                                        });
-
-
-                                    }
-
-                                    @Override
-                                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                    }
-
-                                    @Override
-                                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                                    }
-
-                                    @Override
-                                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
-
-                                Intent in = new Intent(Profile.this, Admin.class);
-                                startActivity(in);
-                                finish();
-                                progressBar.setVisibility(View.INVISIBLE);
-                            }
-                        });
-                    }
-
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Candidate").child(id);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("id", id);
+                    map.put("Candidate_Name", Candidate_Name);
+                    map.put("Candidate_Description", Candidate_Desc);
+                    map.put("Candidate Image", images);
+                    databaseReference.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Intent in = new Intent(Profile.this, Admin.class);
+                            startActivity(in);
+                            finish();
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
+                    });
 
                 }
 
 
-                if (imageUri!=null){
+                if (imageUri != null) {
 
                     final StorageReference filepath = mStorageRef.child("Images")
                             .child(Candidate_Name + "" + random() + ".jpg");
@@ -190,55 +141,13 @@ public class Profile extends AppCompatActivity {
                                         Log.e("ImageLink", download_url);
                                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Candidate").child(id);
                                         Map<String, Object> map = new HashMap<>();
-                                        map.put("id",id);
+                                        map.put("id", id);
                                         map.put("Candidate_Name", Candidate_Name);
                                         map.put("Candidate_Description", Candidate_Desc);
                                         map.put("Candidate Image", download_url);
                                         databaseReference.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-
-                                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Voter-details");
-                                                databaseReference.child(names).addChildEventListener(new ChildEventListener() {
-                                                    @Override
-                                                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                                        ArrayList<String> arrayList=new ArrayList<>();
-                                                        arrayList.add(dataSnapshot.getValue().toString());
-
-
-                                                        DatabaseReference databaseReferences = FirebaseDatabase.getInstance().getReference("Voter-details").child(Candidate_Name);
-                                                        databaseReferences.setValue(arrayList).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                DatabaseReference databaseReferencess = FirebaseDatabase.getInstance().getReference("Voter-details").child(names);
-                                                                databaseReferencess.removeValue();
-                                                            }
-                                                        });
-
-
-                                                    }
-
-                                                    @Override
-                                                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                    }
-                                                });
-
 
                                                 Intent in = new Intent(Profile.this, Admin.class);
                                                 startActivity(in);
@@ -284,7 +193,6 @@ public class Profile extends AppCompatActivity {
             }
         }
     }
-
 
 
     public void Delete(View view) {

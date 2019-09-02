@@ -80,10 +80,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = FirebaseDatabase.getInstance().
+                getReference("Voter Email-Id").orderByChild("voter_name").equalTo(userEmail);
+
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                total = dataSnapshot.getChildrenCount() + "";
+                if (total.equals("1")) {
+                    Intent intent = new Intent(MainActivity.this, Done.class);
+                    startActivity(intent);
+                    finish();
+                }
 
             }
 
@@ -92,24 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-//        query.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                total = dataSnapshot.getChildrenCount() + "";
-//                if (total.equals("1")) {
-//                    Intent intent = new Intent(MainActivity.this, Done.class);
-//                    startActivity(intent);
-//                    finish();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
 
 
     }
@@ -161,6 +151,9 @@ public class MainActivity extends AppCompatActivity {
 
                         myRef = database.getReference("Voter-details");
                         myRef.child(model.getId()).push().setValue(name);
+
+                        DatabaseReference dbref = database.getReference("Voter Email-Id");
+                        dbref.push().child("voter_name").setValue(name);
 
                         Intent intent = new Intent(MainActivity.this, Done.class);
                         startActivity(intent);
