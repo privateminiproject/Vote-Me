@@ -41,8 +41,8 @@
                     android:layout_height="100dp"
                     android:src="@drawable/ppl"
                     android:padding="5dp"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="@color/colorAccent"
+
+
                     app:srcCompat="@drawable/ppl" />
 
                 <TextView
@@ -81,27 +81,30 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
+
                         <TextView
+
                             android:id="@+id/list_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Rupesh"
+                            android:fontFamily="@font/raleway_extrabold"
                             android:gravity="center"
+                            android:text="Rupesh"
                             android:textColor="#fff"
-                            android:textSize="22dp"
 
-                            android:textStyle="bold" />
+                            android:textSize="22dp" />
 
                         <TextView
                             android:id="@+id/list_desc"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:textColor="#fff"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="This candidate is in Msc Cs. also Hard worker make sure to give correct vote." />
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="monospace"
+                            android:text="This candidate is in Msc Cs. also Hard worker make sure to give correct vote."
+                            android:textColor="#fff" />
 
                     </LinearLayout>
 
