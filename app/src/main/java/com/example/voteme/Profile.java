@@ -56,8 +56,6 @@ public class Profile extends AppCompatActivity {
     String names, desc, id, images;
     private Toolbar mToolBar;
 
-    int del;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:background="@drawable/card_bg"
     android:gravity="top"
+    android:id="@+id/layout"
     tools:context=".Profile">
 
     <include layout="@layout/app_bar_layout"
