@@ -6,9 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/card_bg"
     android:gravity="top"
     tools:context=".Profile">
+
+    <include layout="@layout/app_bar_layout"
+        android:id="@+id/appbar"
+        />
 
     <ProgressBar
         android:id="@+id/add_Candidate_progress"

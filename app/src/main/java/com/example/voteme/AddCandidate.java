@@ -2,6 +2,7 @@ package com.example.voteme;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -41,11 +42,16 @@ public class AddCandidate extends AppCompatActivity {
     private Uri imageUri;
     CropImage.ActivityResult result;
     private StorageReference mStorageRef;
+    private Toolbar mToolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_candidate);
+
+        mToolBar=findViewById(R.id.appbar);
+        setSupportActionBar(mToolBar);
+        mToolBar.setTitle("Vote Me");
 
 
         progressBar=findViewById(R.id.add_Candidate_progress);

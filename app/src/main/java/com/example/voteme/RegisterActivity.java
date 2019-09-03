@@ -2,6 +2,7 @@ package com.example.voteme;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,12 +33,17 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     ProgressBar progressBar;
+    private Toolbar mToolBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        mToolBar=findViewById(R.id.appbar);
+        setSupportActionBar(mToolBar);
+        mToolBar.setTitle("Vote Me");
 
         firebaseAuth = FirebaseAuth.getInstance();
         emailId = findViewById(R.id.email);

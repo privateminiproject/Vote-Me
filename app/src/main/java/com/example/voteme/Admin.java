@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -68,6 +69,8 @@ public class Admin extends AppCompatActivity {
     String image=null;
     String description=null;
     private FirebaseAuth mAuth;
+    private Toolbar mToolBar;
+
 
 
     @Override
@@ -77,6 +80,10 @@ public class Admin extends AppCompatActivity {
         add = findViewById(R.id.fab);
         bottomAppBar = findViewById(R.id.bottomAppBar);
         mAuth = FirebaseAuth.getInstance();
+
+        mToolBar=findViewById(R.id.appbar);
+        setSupportActionBar(mToolBar);
+        mToolBar.setTitle("Vote Me");
 
         recyclerView = findViewById(R.id.list1);
 

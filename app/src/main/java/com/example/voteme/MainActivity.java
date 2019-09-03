@@ -2,6 +2,7 @@ package com.example.voteme;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
+    private Toolbar mToolBar;
 
 
     @Override
@@ -47,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mToolBar=findViewById(R.id.appbar);
+        setSupportActionBar(mToolBar);
+        mToolBar.setTitle("Vote Me");
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();

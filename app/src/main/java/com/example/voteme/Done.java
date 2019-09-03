@@ -1,6 +1,7 @@
 package com.example.voteme;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +14,16 @@ public class Done extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private Button Logout;
+    private Toolbar mToolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_done);
+
+        mToolBar=findViewById(R.id.appbar);
+        setSupportActionBar(mToolBar);
+        mToolBar.setTitle("Vote Me");
 
         Logout=findViewById(R.id.logout);
 

@@ -26,6 +26,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         txtDesc = itemView.findViewById(R.id.list_desc);
         img=itemView.findViewById(R.id.imageView);
         vote=itemView.findViewById(R.id.vote);
+        root.setBackgroundResource(R.drawable.card_bg);
     }
 
     public void setVote(String string){

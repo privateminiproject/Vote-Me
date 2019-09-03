@@ -3,6 +3,7 @@ package com.example.voteme;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -53,6 +54,7 @@ public class Profile extends AppCompatActivity {
     String Email;
     ArrayList<String> arrayList = new ArrayList<>();
     String names, desc, id, images;
+    private Toolbar mToolBar;
 
     int del;
 
@@ -61,6 +63,10 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        mToolBar=findViewById(R.id.appbar);
+        setSupportActionBar(mToolBar);
+        mToolBar.setTitle("Vote Me");
 
         progressBar = findViewById(R.id.add_Candidate_progress);
         progressBar.setVisibility(View.INVISIBLE);

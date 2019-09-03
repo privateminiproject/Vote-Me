@@ -6,15 +6,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
+    android:background="@drawable/card_bg"
     tools:context=".Admin">
+
+    <include layout="@layout/app_bar_layout"
+        android:id="@+id/appbar"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:layout_marginTop="60dp"
         >
 
     </androidx.recyclerview.widget.RecyclerView>

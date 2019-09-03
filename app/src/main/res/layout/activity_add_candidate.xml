@@ -6,9 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
-    android:gravity="center"
+    android:background="@drawable/card_bg"
+
     tools:context=".LoginActivity">
+
+    <include layout="@layout/app_bar_layout"
+        android:id="@+id/appbar"
+        />
 
 
 
@@ -16,6 +20,8 @@
         android:id="@+id/candidate_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
         android:src="@drawable/ppl"
         />
 
@@ -37,6 +43,7 @@
 
     <Button
         android:id="@+id/add_Candidate"
+        android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_margin="15dp"
