@@ -5,11 +5,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -47,6 +50,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.ArrayList;
@@ -70,6 +75,7 @@ public class Admin extends AppCompatActivity {
     String description=null;
     private FirebaseAuth mAuth;
     private Toolbar mToolBar;
+    int colors;
 
 
 
@@ -165,6 +171,40 @@ public class Admin extends AppCompatActivity {
                 Glide.with(Admin.this).load(model.getImage()).into(holder.img);
 
 
+
+//                Picasso.get().load(model.getImage()).into(new Target() {
+//                    @Override
+//                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+//                            @Override
+//                            public void onGenerated(@Nullable Palette palette) {
+//                                Palette.Swatch textSwatch = palette.getDarkMutedSwatch();
+//                                colors=textSwatch.getRgb();
+////                                holder.setRoot(colors);
+//                                holder.root.setBackgroundColor(textSwatch.getBodyTextColor());
+//                                Log.e("Color",""+colors);
+//
+//
+//
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                    }
+//                });
+
+
+
+
+
                 DatabaseReference candidate_name = database.getReference("Voter-details").child(model.getId());
                 candidate_name.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -185,6 +225,8 @@ public class Admin extends AppCompatActivity {
                         id=model.getId();
                         name=model.getName();
                         image=model.getImage();
+
+
                         description=model.getDiscription();
                         Intent intent=new Intent(Admin.this,Profile.class);
                         intent.putExtra("name",name);

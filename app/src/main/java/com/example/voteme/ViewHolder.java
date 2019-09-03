@@ -34,33 +34,33 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         txtDesc = itemView.findViewById(R.id.list_desc);
         img=itemView.findViewById(R.id.imageView);
         vote=itemView.findViewById(R.id.vote);
-        root.setBackgroundResource(R.drawable.card_bg);
+        root.setBackgroundResource(R.drawable.card_bg2);
 
-        Picasso.get().load(R.drawable.card_bg).into(new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-
-                Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-                    @Override
-                    public void onGenerated(@Nullable Palette palette) {
-                        Palette.Swatch textSwatch = palette.getDarkMutedSwatch();
-                        int i=textSwatch.getRgb();
-
-                        Log.e("Color",""+i);
-                    }
-                });
-            }
-
-            @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        });
+//        Picasso.get().load(R.drawable.card_bg).into(new Target() {
+//            @Override
+//            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//
+//                Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+//                    @Override
+//                    public void onGenerated(@Nullable Palette palette) {
+//                        Palette.Swatch textSwatch = palette.getDarkMutedSwatch();
+//                        int i=textSwatch.getRgb();
+//
+//                        Log.e("Color",""+i);
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+//
+//            }
+//
+//            @Override
+//            public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//            }
+//        });
 
 
 

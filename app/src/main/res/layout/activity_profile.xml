@@ -27,6 +27,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_candidate_image"
         android:layout_width="150dp"
+
         android:layout_marginTop="50dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
