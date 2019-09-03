@@ -43,4 +43,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.android.material:material:1.0.0'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
+    implementation 'com.android.support:palette-v7:'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

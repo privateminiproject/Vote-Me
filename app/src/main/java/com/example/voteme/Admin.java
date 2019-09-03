@@ -171,7 +171,7 @@ public class Admin extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String Employee1Count = dataSnapshot.getChildrenCount() + " Voted";
                         holder.vote.setText(Employee1Count);
-                        adapter.notifyDataSetChanged();
+//                        adapter.notifyDataSetChanged();
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -208,14 +208,13 @@ public class Admin extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         adapter.startListening();
-        adapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         adapter.stopListening();
-        adapter.notifyDataSetChanged();
+
     }
 
     @Override
